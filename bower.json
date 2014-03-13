@@ -1,0 +1,22 @@
+{
+  "name": "validly",
+  "version": "0.0.1-a",
+  "homepage": "https://github.com/rockerest/validly",
+  "authors": [
+    "rockerest <admin@rockerest.com>"
+  ],
+  "description": "An extensible, dependencyless, Javascript validation engine",
+  "main": "src/validly.js",
+  "keywords": [
+    "validation",
+    "validate"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
