@@ -16,31 +16,44 @@
     };
 
     validly.prototype.min = function( min, input ){
-        (typeof min !== "number") | commonThrow( "number", "minimum" );
-        (min !== parseInt(min)) | commonThrow( "integer", "minimum" );
-        (typeof input !== "string") | commonThrow( "string", "input" );
+        (typeof min === "number") || commonThrow( "number", "minimum" );
+        (min === parseInt(min)) || commonThrow( "integer", "minimum" );
+        (typeof input === "string") || commonThrow( "string", "input" );
 
-        return typeof min === "number" ? (trim(input) ? trim(input).length >= min : false) : true;
+        return trim(input).length >= min;
     };
 
     validly.prototype.max = function( max, input ){
-        (typeof max !== "number") | commonThrow( "number", "maximum" );
-        (max !== parseInt(max)) | commonThrow( "integer", "maximum" );
-        (typeof input !== "string") | commonThrow( "string", "input" );
+        (typeof max === "number") || commonThrow( "number", "maximum" );
+        (max === parseInt(max)) || commonThrow( "integer", "maximum" );
+        (typeof input === "string") || commonThrow( "string", "input" );
 
-        return typeof max === "number" ? (trim(input) ? trim(input).length <= max : false) : true;
+        return trim(input).length <= max;
     };
 
-    validly.prototype.contains = function( string, input ){
-        return trim(input).indexOf( string ) > -1;
+    validly.prototype.contains = function( needle, input ){
+        (typeof needle === "string") || commonThrow( "string", "needle" );
+        (typeof input === "string") || commonThrow( "string", "input" );
+
+        return trim(input).indexOf( needle ) > -1;
     };
 
     validly.prototype.matches = function( regex, input ){
+        (typeof input === "string") || commonThrow( "string", "input" );
+
         if( !(regex instanceof RegExp) ){
+            (typeof regex === "string") || commonThrow( "string", "regex" );
             regex = new RegExp( regex );
         }
 
         return regex.test( trim(input) );
+    };
+
+/****** Plugins ******/
+    validly.prototype.plugin = function( name, plugin ){
+        validly.prototype[ name ] = plugin;
+
+        return this;
     };
 
 /****** Helpers ******/
@@ -112,4 +125,3 @@
     }
 
 }).call( this );
-
