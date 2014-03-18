@@ -49,7 +49,7 @@ define(
         };
 
         /****** Plugins ******/
-        validly.prototype.plugin = function( name, plugin ){
+        validly.plugin = function( name, plugin ){
             if( validly.prototype.hasOwnProperty( name) ){
                 throw new Error( name + " is already defined in Validly. You cannot overwrite existing methods." );
             }
