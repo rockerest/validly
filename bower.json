@@ -6,7 +6,7 @@
     "rockerest <admin@rockerest.com>"
   ],
   "description": "An extensible, dependencyless, Javascript validation engine",
-  "main": "src/validly.js",
+  "main": "validly.js",
   "keywords": [
     "validation",
     "validate"
@@ -18,5 +18,9 @@
     "bower_components",
     "test",
     "tests"
-  ]
+  ],
+  "devDependencies": {
+    "mocha": "~1.18.2",
+    "chai": "~1.9.1"
+  }
 }
