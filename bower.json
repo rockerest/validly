@@ -5,7 +5,7 @@
   "authors": [
     "rockerest <admin@rockerest.com>"
   ],
-  "description": "An extensible, dependencyless, Javascript validation engine",
+  "description": "An extensible, dependencyless*, Javascript validation engine. * depends on an AMD module loader",
   "main": "validly.js",
   "keywords": [
     "validation",

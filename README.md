@@ -1,4 +1,6 @@
 validly
 =======
 
-An extensible, dependencyless, Javascript validation engine
+An extensible, dependencyless*, Javascript validation engine
+
+* Depends on an AMD module loader
