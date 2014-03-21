@@ -165,13 +165,19 @@ define(
                 });
             });
 
-            describe( "#plugin", function(){
+            describe( "::plugin", function(){
                 it( "should return the Validly object", function(){
-                    iv.plugin().should.be.an.instanceof( Validly );
+                    var response = Validly.plugin(),
+                        constructed = new response();
+
+                    constructed.should.be.an.instanceof( Validly );
                 });
 
                 it( "should modify the Validly object with the named plugin", function(){
-                    iv.plugin( "tom", function(){} ).should.have.property( "tom" );
+                    var newValidly = Validly.plugin( "tom", function(){} ),
+                        constructed = new newValidly();
+
+                    constructed.should.have.property( "tom" );
                 });
             });
         });
