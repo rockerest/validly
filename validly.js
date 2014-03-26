@@ -7,6 +7,8 @@ define(
         /****** Define the parent as a new object ******/
         validly = function(){};
 
+        validly.prototype.plugins = [];
+
         /****** Add functionality to the object ******/
         validly.prototype.require = function( input ){
             input = trim( input );
@@ -84,18 +86,29 @@ define(
         };
 
         /****** Plugins ******/
-        validly.plugin = function( name, plugin ){
-            if( validly.prototype.hasOwnProperty( name) ){
-                throw new Error( name + " is already defined in Validly. You cannot overwrite existing methods." );
-            }
-            else{
-                validly.prototype[ name ] = plugin;
-            }
+        validly.plugin = function( name, func ){
+            plugin( validly, name, func );
+
+            return this;
+        };
+
+        validly.prototype.plugin = function( name, func ){
+            plugin( this, name, func );
 
             return this;
         };
 
         /****** Helpers ******/
+        function plugin( scope, name, functionality ){
+            if( scope.prototype.hasOwnProperty( name ) ){
+                throw new Error( name + " is already defined in Validly. You cannot overwrite existing methods." );
+            }
+            else{
+                scope.prototype[ name ] = functionality;
+                scope.prototype.plugins.push( name );
+            }
+        }
+
         function trim( input ){
             return typeof input === "string" ? input.trim() : input;
         }
