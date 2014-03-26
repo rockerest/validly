@@ -40,18 +40,18 @@ define(
             });
 
             describe( "#min", function(){
-                it( "should throw an error when the minimum is not an integer", function(){
-                    expect( function(){ iv.min( undefined, "string" ); } ).to.throw( Error );
-                    expect( function(){ iv.min( null, "string" ); } ).to.throw( Error );
-                    expect( function(){ iv.min( true, "string" ); } ).to.throw( Error );
-                    expect( function(){ iv.min( "4", "string" ); } ).to.throw( Error );
+                it( "should return false when the minimum is not an integer", function(){
+                    iv.min( undefined, "string" ).should.be.false;
+                    iv.min( null, "string" ).should.be.false;
+                    iv.min( true, "string" ).should.be.false;
+                    iv.min( "4", "string" ).should.be.false;
                 });
 
-                it( "should throw an error when the input is not a string", function(){
-                    expect( function(){ iv.min( 5 ); } ).to.throw( Error );
-                    expect( function(){ iv.min( 5, null ); } ).to.throw( Error );
-                    expect( function(){ iv.min( 5, false ); } ).to.throw( Error );
-                    expect( function(){ iv.min( 5, 3 ); } ).to.throw( Error );
+                it( "should return false when the input is not a string", function(){
+                    iv.min( 5 ).should.be.false;
+                    iv.min( 5, null ).should.be.false;
+                    iv.min( 5, false ).should.be.false;
+                    iv.min( 5, 3 ).should.be.false;
                 });
 
                 it( "should return true when the input is the minimum length", function(){
@@ -68,18 +68,18 @@ define(
             });
 
             describe( "#max", function(){
-                it( "should throw an error when the maximum is not an integer", function(){
-                    expect( function(){ iv.max( undefined, "string" ); } ).to.throw( Error );
-                    expect( function(){ iv.max( null, "string" ); } ).to.throw( Error );
-                    expect( function(){ iv.max( true, "string" ); } ).to.throw( Error );
-                    expect( function(){ iv.max( "7", "string" ); } ).to.throw( Error );
+                it( "should return false when the maximum is not an integer", function(){
+                    iv.max( undefined, "string" ).should.be.false;
+                    iv.max( null, "string" ).should.be.false;
+                    iv.max( true, "string" ).should.be.false;
+                    iv.max( "7", "string" ).should.be.false;
                 });
 
-                it( "should throw an error when the input is not a string", function(){
-                    expect( function(){ iv.max( 5 ); } ).to.throw( Error );
-                    expect( function(){ iv.max( 5, null ); } ).to.throw( Error );
-                    expect( function(){ iv.max( 5, false ); } ).to.throw( Error );
-                    expect( function(){ iv.max( 5, 4 ); } ).to.throw( Error );
+                it( "should return false when the input is not a string", function(){
+                    iv.max( 5 ).should.be.false;
+                    iv.max( 5, null ).should.be.false;
+                    iv.max( 5, false ).should.be.false;
+                    iv.max( 5, 4 ).should.be.false;
                 });
 
                 it( "should return true when the input is the maximum length", function(){
@@ -96,18 +96,18 @@ define(
             });
 
             describe( "#contains", function(){
-                it( "should throw an error when the needle is not a string", function(){
-                    expect( function(){ iv.contains( undefined, "input string" ); } ).to.throw( Error );
-                    expect( function(){ iv.contains( null, "input string" ); } ).to.throw( Error );
-                    expect( function(){ iv.contains( true, "input string" ); } ).to.throw( Error );
-                    expect( function(){ iv.contains( 5, "input string" ); } ).to.throw( Error );
+                it( "should return false when the needle is not a string", function(){
+                    iv.contains( undefined, "input string" ).should.be.false;
+                    iv.contains( null, "input string" ).should.be.false;
+                    iv.contains( true, "input string" ).should.be.false;
+                    iv.contains( 5, "input string" ).should.be.false;
                 });
 
-                it( "should throw an error when the input is not a string", function(){
-                    expect( function(){ iv.contains( "t s" ); } ).to.throw( Error );
-                    expect( function(){ iv.contains( "t s", null ); } ).to.throw( Error );
-                    expect( function(){ iv.contains( "t s", false ); } ).to.throw( Error );
-                    expect( function(){ iv.contains( "t s", 3 ); } ).to.throw( Error );
+                it( "should return false when the input is not a string", function(){
+                    iv.contains( "t s" ).should.be.false;
+                    iv.contains( "t s", null ).should.be.false;
+                    iv.contains( "t s", false ).should.be.false;
+                    iv.contains( "t s", 3 ).should.be.false;
                 });
 
                 it( "should return true if the substring exists in the input", function(){
@@ -126,24 +126,24 @@ define(
             });
 
             describe( "#matches", function(){
-                it( "should throw an error when the input is not a string", function(){
-                    expect( function(){ iv.matches( "\w" ); } ).to.throw( Error );
-                    expect( function(){ iv.matches( "\w", null ); } ).to.throw( Error );
-                    expect( function(){ iv.matches( "\w", false ); } ).to.throw( Error );
-                    expect( function(){ iv.matches( "\w", 4 ); } ).to.throw( Error );
+                it( "should return false when the input is not a string", function(){
+                    iv.matches( /\w/ ).should.be.false;
+                    iv.matches( /\w/, null ).should.be.false;
+                    iv.matches( /\w/, false ).should.be.false;
+                    iv.matches( /\w/, 4 ).should.be.false;
                 });
 
-                it( "should throw an error when the regex is not a string or RegExp", function(){
-                    expect( function(){ iv.matches( undefined, "string" ); } ).to.throw( Error );
-                    expect( function(){ iv.matches( null, "string" ); } ).to.throw( Error );
-                    expect( function(){ iv.matches( false, "string" ); } ).to.throw( Error );
-                    expect( function(){ iv.matches( 1, "string" ); } ).to.throw( Error );
+                it( "should return false when the regex is not a RegExp", function(){
+                    iv.matches( undefined, "string" ).should.be.false;
+                    iv.matches( null, "string" ).should.be.false;
+                    iv.matches( false, "string" ).should.be.false;
+                    iv.matches( 1, "string" ).should.be.false;
                 });
 
                 it( "should return true if the input passes the regular expression", function(){
-                    iv.matches( "\s", "input string" ).should.be.true;
-                    iv.matches( "[i]", "input string" ).should.be.true;
-                    iv.matches( "^input", "input string" ).should.be.true;
+                    iv.matches( /\s/, "input string" ).should.be.true;
+                    iv.matches( /[i]/, "input string" ).should.be.true;
+                    iv.matches( /^input/, "input string" ).should.be.true;
 
                     iv.matches( /\s/, "input string" ).should.be.true;
                     iv.matches( /[i]/, "input string" ).should.be.true;
@@ -151,17 +151,13 @@ define(
                 });
 
                 it( "should return false if the input does not pass the regular expression", function(){
-                    iv.matches( "i[^n]", "input string" ).should.be.false;
-                    iv.matches( "\d", "input string" ).should.be.false;
-                    iv.matches( "\s{2,}", "input string" ).should.be.false;
+                    iv.matches( /i[^n]/, "input string" ).should.be.false;
+                    iv.matches( /\d/, "input string" ).should.be.false;
+                    iv.matches( /\s{2,}/, "input string" ).should.be.false;
 
                     iv.matches( /i[^n]/, "input string" ).should.be.false;
                     iv.matches( /\d/, "input string" ).should.be.false;
                     iv.matches( /\s{2,}/, "input string" ).should.be.false;
-                });
-
-                it( "should return true if the regular expression is an empty string", function(){
-                    iv.matches( "", "input" ).should.be.true;
                 });
             });
 
