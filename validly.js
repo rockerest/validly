@@ -16,6 +16,15 @@ define(
             return (input !== "" && input !== undefined && input !== null);
         };
 
+        validly.prototype.equals = function( first, second, strictly ){
+            if( strictly === true ){
+                return first === second;
+            }
+            else{
+                return first == second;
+            }
+        };
+
         validly.prototype.isNumber = function( input ){
             if( typeof input === "string" ){
                 return this.matches( /^-?(?:\\d+|\\d{1,3}(?:,\\d{3})+)?(?:\\.\\d+)?$/, input );
@@ -76,7 +85,7 @@ define(
 
         };
 
-        validly.prototype.matches = function( regex, input ){
+        validly.prototype.pattern = function( regex, input ){
             if( this.isRegex( regex ) && this.isString( input ) ){
                 return regex.test( trim(input) );
             }
