@@ -39,12 +39,200 @@ define(
                 });
             });
 
+            describe( "#equals", function(){
+                describe( "when not called strictly", function(){
+                    it( "should return false when the inputs are not loosely equal", function(){
+                        iv.equals( 1, "2" ).should.be.false;
+                        var string = "string";
+                        iv.equals( "thing", string ).should.be.false;
+                        iv.equals( 1, false ).should.be.false;
+
+                        // explicitly loosely
+                        iv.equals( "thing", string, false ).should.be.false;
+                        iv.equals( 1, false, false ).should.be.false;
+                    });
+
+                    it( "should return true when the inputs are loosely equal", function(){
+                        iv.equals( 1, "1" ).should.be.true;
+                        var string = "one";
+                        iv.equals( "one", string ).should.be.true;
+                        iv.equals( 1, true ).should.be.true;
+
+                        // explicitly loosely
+                        iv.equals( "one", string, false ).should.be.true;
+                        iv.equals( 1, true, false ).should.be.true;
+                    });
+                });
+
+                describe( "when called strictly", function(){
+                    it( "should return false when the inputs are not strictly equal", function(){
+                        iv.equals( 1, "1", true ).should.be.false;
+                        iv.equals( 1, true, true ).should.be.false;
+                        iv.equals( 0, false, true ).should.be.false;
+                    });
+
+                    it( "should return true when the inputs are strictly equal", function(){
+                        iv.equals( 1, 1, true ).should.be.true;
+                        var string = "one";
+                        iv.equals( "one", string, true ).should.be.true;
+                        iv.equals( Boolean( 1 ), true, true ).should.be.true;
+                    });
+                });
+            });
+
+            describe( "#isNumber", function(){
+                describe( "when passed a string", function(){
+                    describe( "and used strictly", function(){
+                        it( "should return false", function(){
+                            iv.isNumber( "1,000.45", true ).should.be.false;
+                            iv.isNumber( "-1,000.45", true ).should.be.false;
+                            iv.isNumber( "12", true ).should.be.false;
+                            iv.isNumber( "1,000x", true ).should.be.false;
+                            iv.isNumber( "-1,000x", true ).should.be.false;
+                            iv.isNumber( "1,000|45", true ).should.be.false;
+                        });
+                    });
+
+                    describe( "and used non-strictly", function(){
+                        it( "should return true when passed a valid human-readable number", function(){
+                            iv.isNumber( "1,000", false ).should.be.true;
+                            iv.isNumber( "-1,000" ).should.be.true;
+                            iv.isNumber( "1,000.45", false ).should.be.true;
+                            iv.isNumber( "-1,000.45" ).should.be.true;
+                            iv.isNumber( "12" ).should.be.true;
+                        });
+
+                        it( "should return false when passed an invalid human-readable number", function(){
+                            iv.isNumber( "1,000x", false ).should.be.false;
+                            iv.isNumber( "-1,000x" ).should.be.false;
+                            iv.isNumber( "1,000|45" ).should.be.false;
+                            iv.isNumber( "-1,000|45", false ).should.be.false;
+                            iv.isNumber( "12%" ).should.be.false;
+                            iv.isNumber( ".1000." ).should.be.false;
+                        });
+                    });
+                });
+
+                describe( "when passed a number", function(){
+                    it( "should return true for numbers", function(){
+                        iv.isNumber( Number( "1000" ) ).should.be.true;
+                        iv.isNumber( -1000 ).should.be.true;
+                        iv.isNumber( 1000.45 ).should.be.true;
+                        iv.isNumber( -1000.45 ).should.be.true;
+                        iv.isNumber( 12 ).should.be.true;
+                    });
+
+                    it( "should return false for NaN", function(){
+                        iv.isNumber( Number( "Hello!" ) ).should.be.false;
+                        iv.isNumber( (100/"blue") ).should.be.false;
+                    });
+                });
+
+                describe( "when passed neither a string nor a number", function(){
+                    it( "should return false", function(){
+                        iv.isNumber( /nope/ig ).should.be.false;
+                        iv.isNumber( true ).should.be.false;
+                        iv.isNumber( {} ).should.be.false;
+                    });
+                });
+            });
+
+            describe( "isInteger", function(){
+                describe( "when called strictly", function(){
+
+                });
+
+                describe( "when called non-strictly", function(){
+
+                });
+                describe( "when passed a string", function(){
+                    describe( "and used strictly", function(){
+                        it( "should return false", function(){
+                            iv.isInteger( "-1000", true ).should.be.false;
+                            iv.isInteger( "12", true ).should.be.false;
+                            iv.isInteger( "3x", true ).should.be.false;
+                            iv.isInteger( "four", true ).should.be.false;
+                        });
+                    });
+
+                    describe( "and used non-strictly", function(){
+                        it( "should return true when passed a valid human-readable integer", function(){
+                            iv.isInteger( "1000", false ).should.be.true;
+                            iv.isInteger( "-1000", false ).should.be.true;
+                            iv.isInteger( "12", false ).should.be.true;
+                        });
+
+                        it( "should return false when passed an invalid human-readable integer", function(){
+                            iv.isInteger( "3x" ).should.be.false;
+                            iv.isInteger( "four", false ).should.be.false;
+                            iv.isInteger( "+6" ).should.be.false;
+                            iv.isInteger( "10.5", false ).should.be.false;
+                            iv.isInteger( "10.0" ).should.be.false;
+                        });
+                    });
+                });
+
+                describe( "when passed a number", function(){
+                    it( "should return true for integers", function(){
+                        iv.isInteger( Number( "1000" ) ).should.be.true;
+                        iv.isInteger( -1000 ).should.be.true;
+                        iv.isInteger( 1000 ).should.be.true;
+                        iv.isInteger( 12 ).should.be.true;
+                    });
+
+                    it( "should return false for NaN", function(){
+                        iv.isInteger( Number( "Hello!" ) ).should.be.false;
+                        iv.isInteger( (100/"blue") ).should.be.false;
+                    });
+                });
+
+                describe( "when passed neither a string nor a number", function(){
+                    it( "should return false", function(){
+                        iv.isInteger( /nope/ig ).should.be.false;
+                        iv.isInteger( true ).should.be.false;
+                        iv.isInteger( {} ).should.be.false;
+                    });
+                });
+            });
+
+            describe( "isString", function(){
+                it( "should return true for any string", function(){
+                    iv.isString( "hello" ).should.be.true;
+                    iv.isString( "hello    ".trim() ).should.be.true;
+                    iv.isString( String( "things" ) ).should.be.true;
+                    iv.isString( "hello" + " there" ).should.be.true;
+                });
+
+                it( "should return false for any non-string", function(){
+                    iv.isString( 0 ).should.be.false;
+                    iv.isString( /string?/gi ).should.be.false;
+                    iv.isString( true ).should.be.false;
+                    iv.isString( null ).should.be.false;
+                    iv.isString( undefined ).should.be.false;
+                });
+            });
+
+            describe( "isRegex", function(){
+                it( "should return true for any RegExp", function(){
+                    iv.isRegex( /[\w]/ ).should.be.true;
+                    iv.isRegex( RegExp( "[\w]" ) ).should.be.true;
+                    iv.isRegex( /./g ).should.be.true;
+                });
+
+                it( "should return false for any non-RegExp", function(){
+                    iv.isRegex( 0 ).should.be.false;
+                    iv.isRegex( "string" ).should.be.false;
+                    iv.isRegex( true ).should.be.false;
+                    iv.isRegex( null ).should.be.false;
+                    iv.isRegex( undefined ).should.be.false;
+                });
+            });
+
             describe( "#min", function(){
                 it( "should return false when the minimum is not an integer", function(){
                     iv.min( undefined, "string" ).should.be.false;
                     iv.min( null, "string" ).should.be.false;
                     iv.min( true, "string" ).should.be.false;
-                    iv.min( "4", "string" ).should.be.false;
                 });
 
                 it( "should return false when the input is not a string", function(){
@@ -72,7 +260,6 @@ define(
                     iv.max( undefined, "string" ).should.be.false;
                     iv.max( null, "string" ).should.be.false;
                     iv.max( true, "string" ).should.be.false;
-                    iv.max( "7", "string" ).should.be.false;
                 });
 
                 it( "should return false when the input is not a string", function(){
@@ -125,39 +312,39 @@ define(
                 });
             });
 
-            describe( "#matches", function(){
+            describe( "#pattern", function(){
                 it( "should return false when the input is not a string", function(){
-                    iv.matches( /\w/ ).should.be.false;
-                    iv.matches( /\w/, null ).should.be.false;
-                    iv.matches( /\w/, false ).should.be.false;
-                    iv.matches( /\w/, 4 ).should.be.false;
+                    iv.pattern( /\w/ ).should.be.false;
+                    iv.pattern( /\w/, null ).should.be.false;
+                    iv.pattern( /\w/, false ).should.be.false;
+                    iv.pattern( /\w/, 4 ).should.be.false;
                 });
 
                 it( "should return false when the regex is not a RegExp", function(){
-                    iv.matches( undefined, "string" ).should.be.false;
-                    iv.matches( null, "string" ).should.be.false;
-                    iv.matches( false, "string" ).should.be.false;
-                    iv.matches( 1, "string" ).should.be.false;
+                    iv.pattern( undefined, "string" ).should.be.false;
+                    iv.pattern( null, "string" ).should.be.false;
+                    iv.pattern( false, "string" ).should.be.false;
+                    iv.pattern( 1, "string" ).should.be.false;
                 });
 
                 it( "should return true if the input passes the regular expression", function(){
-                    iv.matches( /\s/, "input string" ).should.be.true;
-                    iv.matches( /[i]/, "input string" ).should.be.true;
-                    iv.matches( /^input/, "input string" ).should.be.true;
+                    iv.pattern( /\s/, "input string" ).should.be.true;
+                    iv.pattern( /[i]/, "input string" ).should.be.true;
+                    iv.pattern( /^input/, "input string" ).should.be.true;
 
-                    iv.matches( /\s/, "input string" ).should.be.true;
-                    iv.matches( /[i]/, "input string" ).should.be.true;
-                    iv.matches( /^input/, "input string" ).should.be.true;
+                    iv.pattern( /\s/, "input string" ).should.be.true;
+                    iv.pattern( /[i]/, "input string" ).should.be.true;
+                    iv.pattern( /^input/, "input string" ).should.be.true;
                 });
 
                 it( "should return false if the input does not pass the regular expression", function(){
-                    iv.matches( /i[^n]/, "input string" ).should.be.false;
-                    iv.matches( /\d/, "input string" ).should.be.false;
-                    iv.matches( /\s{2,}/, "input string" ).should.be.false;
+                    iv.pattern( /i[^n]/, "input string" ).should.be.false;
+                    iv.pattern( /\d/, "input string" ).should.be.false;
+                    iv.pattern( /\s{2,}/, "input string" ).should.be.false;
 
-                    iv.matches( /i[^n]/, "input string" ).should.be.false;
-                    iv.matches( /\d/, "input string" ).should.be.false;
-                    iv.matches( /\s{2,}/, "input string" ).should.be.false;
+                    iv.pattern( /i[^n]/, "input string" ).should.be.false;
+                    iv.pattern( /\d/, "input string" ).should.be.false;
+                    iv.pattern( /\s{2,}/, "input string" ).should.be.false;
                 });
             });
 
