@@ -25,21 +25,21 @@ define(
             }
         };
 
-        validly.prototype.isNumber = function( input ){
-            if( typeof input === "string" ){
-                return this.matches( /^-?(?:\\d+|\\d{1,3}(?:,\\d{3})+)?(?:\\.\\d+)?$/, input );
+        validly.prototype.isNumber = function( input, strictly ){
+            if( typeof input === "string" && !strictly ){
+                return this.pattern( /^-?(?:\d+|\d{1,3}(?:,\d{3})+)?(?:\.\d+)?$/, input );
             }
             else if( typeof input === "number" ){
-                return true;
+                return !isNaN( input );
             }
             else{
                 return false;
             }
         };
 
-        validly.prototype.isInteger = function( input ){
-            if( typeof input === "string" ){
-                return this.matches( /^-?\\d+$/, input );
+        validly.prototype.isInteger = function( input, strictly ){
+            if( typeof input === "string" && !strictly ){
+                return this.pattern( /^-?\d+$/, input );
             }
             else if( typeof input === "number" ){
                 return parseInt( input ) == input;
