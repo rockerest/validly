@@ -138,13 +138,6 @@ define(
             });
 
             describe( "isInteger", function(){
-                describe( "when called strictly", function(){
-
-                });
-
-                describe( "when called non-strictly", function(){
-
-                });
                 describe( "when passed a string", function(){
                     describe( "and used strictly", function(){
                         it( "should return false", function(){
