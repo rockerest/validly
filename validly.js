@@ -5,7 +5,9 @@ define(
             global = this;
 
         /****** Define the parent as a new object ******/
-        validly = function(){};
+        validly = function(){
+            this.version = "0.0.7";
+        };
 
         validly.prototype.plugins = [];
 
