@@ -6,7 +6,7 @@ define(
 
         /****** Define the parent as a new object ******/
         validly = function(){
-            this.version = "0.0.7";
+            this.version = "0.1.0";
         };
 
         validly.prototype.plugins = [];
